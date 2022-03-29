@@ -1,5 +1,4 @@
 
-
 <form [formGroup]="spedizioneForm" (ngSubmit)="onSubmit()">
   <div formGroupName="spedizione" class="row">
     <div class="mt-4 col-4">
@@ -43,28 +42,3 @@
 
   <button type="submit">Spedisci</button>
 </form>
-
-<hr />
-
-<!-- <p>Form Value: {{ profileForm.value | json }}</p>
-
-<p>Form Status: {{ profileForm.status }}</p> -->
-
-<!-- <h1>AUTo Complete</h1> -->
-
-<!-- <mat-form-field class=" col-md-6 home-input-search" [formGroup]="profileForm" >
-    
-  <input matInput  placeholder="Città di partenza" [matAutocomplete]="auto" [formControl]="cityCtrl" >
-  
-  <mat-autocomplete #auto="matAutocomplete">
-    <mat-option *ngFor="let city of filteredCity | async" [value]="city.Field">
-      <span>{{city.Name}} - {{ city.Cap}} </span>
-      
-    </mat-option>
-  </mat-autocomplete> -->
-
-<!-- 
-Copyright Google LLC. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at https://angular.io/license
--->
