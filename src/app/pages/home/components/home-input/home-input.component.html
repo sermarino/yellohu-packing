@@ -1,0 +1,55 @@
+<div class="row">
+
+  <!-- INPUT "FROM" PLACE -->
+  <mat-form-field class=" col-md-6 home-input-search">
+    
+    <input matInput placeholder="Città di partenza" [matAutocomplete]="auto" [formControl]="cityCtrl">
+    
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let city of filteredCity | async" [value]="city.Field">
+        <span>{{city.Name}} - {{ city.Cap}} </span>
+        
+      </mat-option>
+    </mat-autocomplete>
+    
+  </mat-form-field>
+  <!-- INPUT "TO" PLACE -->
+  <mat-form-field class="col-md-6">
+    
+    <input matInput placeholder="Città di destinazione" [matAutocomplete]="auto" [formControl]="cityCtrl">
+    
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let city of filteredCity | async" [value]="city.Field">
+        <span>{{city.Name}} - {{ city.Cap}} </span>
+        
+      </mat-option>
+    </mat-autocomplete>
+    
+  </mat-form-field>
+</div>
+<div class="row">
+  <form action="" >
+    <mat-form-field class="col-12 col-md-4" appearance="fill">
+      <mat-label>Altezza</mat-label>
+      <input matInput placeholder="cm" />
+    </mat-form-field>
+    <mat-form-field class="col-12 col-md-4" appearance="fill">
+      <mat-label>Larghezza</mat-label>
+      <input matInput placeholder="cm" />
+    </mat-form-field>
+    <mat-form-field class="col-12 col-md-4" appearance="fill">
+      <mat-label>Prodondità</mat-label>
+      <input matInput placeholder="cm" />
+
+      <!-- <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint> -->
+    </mat-form-field>
+  </form>
+</div>
+<div class="row">
+    <form >
+        <mat-form-field class="col-12" appearance="fill">
+            <mat-label>Peso</mat-label>
+            <input matInput placeholder="Kg" />
+          </mat-form-field>
+    </form>
+</div>

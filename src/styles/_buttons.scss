@@ -1,0 +1,11 @@
+@import './variables';
+
+
+.yellohu-btn{
+    width: 100%;
+    height:200px;
+    &-main{
+        background: $yellohu-main !important;
+        color: #fff;
+    }
+}

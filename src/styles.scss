@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+@import "./styles/variables";
+@import "./styles/mixins";
+@import "./styles/buttons";
+@import "~bootstrap/scss/bootstrap.scss";
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-image: url('./assets/images/hero-home.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}

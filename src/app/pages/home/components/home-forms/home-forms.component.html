@@ -1,0 +1,70 @@
+
+
+<form [formGroup]="spedizioneForm" (ngSubmit)="onSubmit()">
+  <div formGroupName="spedizione" class="row">
+    <div class="mt-4 col-4">
+      <label>Partenza</label>
+      <input class="form-control" placeholder="Partenza" type="text" />
+      <label>Destinazione</label>
+      <input class="mt-2 form-control" placeholder="Destinazione" type="text" />
+    </div>
+
+    <ng-container formArrayName="pacchi">
+      <div
+        *ngFor="
+          let collo of spedizioneForm.get('spedizione.pacchi')['controls'];
+          let i = index
+        "
+        class="col-4 mt-4 d-flex flex-column"
+      >
+        <div [formGroupName]="i">
+          <input formControlName="weight" type="number" class="form-control" placeholder="Peso" />
+          <div class="row mt-2 gy-0 gx-2">
+            <div class="col-4">
+              <input formControlName="height" type="number" class="form-control" placeholder="Altezza" />
+            </div>
+            <div class="col-4">
+              <input formControlName="width" class="form-control" type="number" placeholder="Lunghezza" />
+            </div>
+            <div class="col-4">
+              <input formControlName="depth" class="form-control" type="number" placeholder="Larghezza" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 col-4">
+        <button type="button" (click)="aggiungiCollo()">Aggiungi collo</button>
+      </div>
+    </ng-container>
+
+   
+  </div>
+
+  <button type="submit">Spedisci</button>
+</form>
+
+<hr />
+
+<!-- <p>Form Value: {{ profileForm.value | json }}</p>
+
+<p>Form Status: {{ profileForm.status }}</p> -->
+
+<!-- <h1>AUTo Complete</h1> -->
+
+<!-- <mat-form-field class=" col-md-6 home-input-search" [formGroup]="profileForm" >
+    
+  <input matInput  placeholder="Città di partenza" [matAutocomplete]="auto" [formControl]="cityCtrl" >
+  
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let city of filteredCity | async" [value]="city.Field">
+      <span>{{city.Name}} - {{ city.Cap}} </span>
+      
+    </mat-option>
+  </mat-autocomplete> -->
+
+<!-- 
+Copyright Google LLC. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at https://angular.io/license
+-->
