@@ -1,0 +1,15 @@
+@import '../../../styles/_variables.scss';
+
+.nav{
+    background-color: $yellohu-main !important;
+    border-bottom: 3px solid $yellohu-yellow !important;
+}
+
+.nav-logo{
+    height: 50px;
+}
+
+a{
+    color: white !important;
+    font-size:37px;
+}

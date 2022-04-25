@@ -2,10 +2,26 @@
 <form [formGroup]="spedizioneForm" (ngSubmit)="onSubmit()">
   <div formGroupName="spedizione" class="row">
     <div class="mt-4 col-4">
-      <label>Partenza</label>
-      <input class="form-control" placeholder="Partenza" type="text" />
-      <label>Destinazione</label>
-      <input class="mt-2 form-control" placeholder="Destinazione" type="text" />
+
+      <div>
+        <p>Percorso</p>
+      </div>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Partenza</mat-label>
+        <input list="cittàFrom" matInput formControlName="partenza" placeholder="Roma">
+        <datalist id="cittàFrom" >
+          <option *ngFor="let city of citiesList"  value={{city.Field}} >{{city.Field}}</option>
+        </datalist>
+       
+      </mat-form-field>
+      
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Destinazione</mat-label>
+        <input list="cittàTo" matInput formControlName="destinazione" placeholder="Milano">
+        <datalist id="cittàTo" >
+          <option *ngFor="let city of citiesList"  value={{city.Field}} >{{city.Field}}</option>
+        </datalist>
+      </mat-form-field>
     </div>
 
     <ng-container formArrayName="pacchi">
@@ -17,28 +33,66 @@
         class="col-4 mt-4 d-flex flex-column"
       >
         <div [formGroupName]="i">
-          <input formControlName="weight" type="number" class="form-control" placeholder="Peso" />
-          <div class="row mt-2 gy-0 gx-2">
-            <div class="col-4">
-              <input formControlName="height" type="number" class="form-control" placeholder="Altezza" />
-            </div>
-            <div class="col-4">
-              <input formControlName="width" class="form-control" type="number" placeholder="Lunghezza" />
-            </div>
-            <div class="col-4">
-              <input formControlName="depth" class="form-control" type="number" placeholder="Larghezza" />
-            </div>
+
+          <div >
+            <p>Collo N° {{i+1}}</p>
           </div>
+
+          <div class="gx-2">
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Peso</mat-label>
+              <input type="number" matInput formControlName="weight" placeholder="0">
+            </mat-form-field>
+          </div>
+
+          <div class="row gy-0 gx-2">
+            <div class="col-4">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Altezza (cm)</mat-label>
+                <input type="number" matInput formControlName="height" placeholder="0">
+              </mat-form-field>
+            </div>
+            <div class="col-4">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Lunghezza (cm)</mat-label>
+                <input type="number" matInput formControlName="width" placeholder="0">
+              </mat-form-field>
+            </div>
+            <div class="col-4">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Larghezza (cm)</mat-label>
+                <input type="number" matInput formControlName="depth" placeholder="0">
+              </mat-form-field>
+            </div>
+            
+          </div>
+         
+          <button class="removeCollo btn justify-content-end" type="button" (click)="rimuoviCollo(i)"  aria-label="Rimuovi collo">
+            Rimuovi
+          </button>
+          <button class="removeCollo btn justify-content-end" type="button" (click)="duplicaCollo(i)"  aria-label="Rimuovi collo">
+            Clona collo
+          </button>
+           
         </div>
+
+        
+
       </div>
 
-      <div class="mt-4 col-4">
-        <button type="button" (click)="aggiungiCollo()">Aggiungi collo</button>
+      <div class="mt-4 col-4 d-flex align-items-center justify-content-center">
+        
+        <button class="sergio" type="button" (click)="aggiungiCollo()" mat-fab aria-label="Aggiungi collo">
+          <mat-icon>add</mat-icon>
+        </button>
       </div>
+      
     </ng-container>
 
    
   </div>
 
-  <button type="submit">Spedisci</button>
+  <div class="d-flex justify-content-end py-3">
+    <button class="spedisci" type="submit" mat-raised-button>Spedisci</button>
+  </div>
 </form>

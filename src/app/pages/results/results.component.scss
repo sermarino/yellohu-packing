@@ -1,0 +1,46 @@
+@import '../../../styles/_variables.scss';
+
+.result {
+    height: 200px;
+    background: white;
+}
+
+.home-container-input{
+    background-color: #fff;
+    border: 3px solid $yellohu-yellow;
+    padding: 20px;
+    justify-content: space-between;
+}
+
+.results{
+    &-nav-label{
+        font-size:30px;
+    }
+}
+
+.results-container{
+    border-bottom: 1px solid black;
+}
+
+
+h2{
+    color: #000;
+}
+
+.result-elem{
+    display: flex;
+    margin-top: 50px;
+    flex-direction: column;
+    justify-content: space-between;
+    height: auto;
+    text-align: center;
+}
+
+.courier-logo{
+    margin:auto;
+    max-width: 100px;
+}
+
+.courier-logo{
+    width:200px;
+}

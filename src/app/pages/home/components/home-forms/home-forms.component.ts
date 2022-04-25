@@ -1,11 +1,14 @@
 import { startWith, map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { FormArray } from '@angular/forms';
 import  data from '../../../../../assets/json/elencoComuni.json';
 import { Cities } from 'src/app/models/cities.model';
+import { ShippingService } from 'src/app/services/shipping.service';
+import { flattenDeep, groupBy } from 'lodash';
+import { NavigationExtras, Router } from '@angular/router';
 
 class Collo {
   weight: number;
@@ -32,7 +35,11 @@ export class HomeFormsComponent implements OnInit {
 
   spedizioneForm: FormGroup;
   fields: any;
-  
+
+  extras: NavigationExtras;
+
+  citiesList: Cities[] = data; 
+
 /*   cityCtrl = new FormControl();  
   filteredCity: Observable<Cities[]>;
   filteredCap: Observable<Cities[]>;
@@ -105,48 +112,87 @@ export class HomeFormsComponent implements OnInit {
   aggiungiCollo() {
     const control = <FormArray>this.spedizioneForm.get('spedizione.pacchi');
     control.push(this.patchValues(new Collo()));
-
+    console.log("COSA è QUESTO?",control.controls)
     //this.colli.push(new Collo());
   }
 
+  rimuoviCollo(formIndex: number) {
+    const control = <FormArray>this.spedizioneForm.get('spedizione.pacchi');
+    control.removeAt(formIndex);
+    
+  }
 
-/*   get aliases() {
-    return (this.profileForm.get('aliases') as FormArray);
+  duplicaCollo(formIndex: number) {
+    const control = <FormArray>this.spedizioneForm.get('spedizione.pacchi');
+    control.push(control.controls[formIndex])
+    console.log("PEPEPE",control.controls[formIndex])
   }
-  get weight(){
-    return (this.profileForm.get('weight') as FormArray);
-  }
-  get height(){
-    return (this.profileForm.get('height') as FormArray);
-  }
-  get width(){
-    return (this.profileForm.get('width') as FormArray);
-  }
-  get depth(){
-    return (this.profileForm.get('depth') as FormArray);
-  }
- */
-  constructor(private fb: FormBuilder) {
 
+
+
+  constructor(
+    private fb: FormBuilder,
+    private shippingService: ShippingService,
+    private router: Router
+    ) {
 
    }
 
 
-/*   private _filteredCities(value: string): Cities[]{
-    const filterValue = value.toLowerCase();
 
-    return this.cities.filter(state => state.Name.toLowerCase().indexOf(filterValue) === 0);
-  }
-  private _filteredCap(value: string): Cities[]{
-    const filterValue = value.toLowerCase();
-
-    return this.cities.filter(state => state.Cap.toLowerCase().indexOf(filterValue) === 0);
-  }
- */
  
 
   onSubmit() {
     // TODO: Use EventEmitter with form value
-    console.log(this.spedizioneForm.value);
+    this.shippingService.getRegione(this.spedizioneForm.get('spedizione.partenza').value);
+
+    const capFrom = this.spedizioneForm.get('spedizione.partenza').value;
+    const capTo = this.spedizioneForm.get('spedizione.destinazione').value;
+
+    const colli = this.spedizioneForm.get('spedizione.pacchi').value;
+
+    const carmine = colli.map(collo => this.shippingService.getShipping(capFrom, capTo, collo.weight,collo.height,collo.width, collo.depth));
+
+    forkJoin(carmine).subscribe((res: any[]) => {
+      const allValues = flattenDeep(res);
+      const groupedValues = groupBy(allValues, this.getCourierId)
+    
+      const idCorrieri = Object.keys(groupedValues);
+
+      const mappa = new Map<string, number>();
+      for (let id of idCorrieri) {
+        const spedizioni = groupedValues[id];
+        const prezzo = spedizioni.map(x => x.Pricing).reduce((a, b) => a + b, 0);
+        mappa.set(id, prezzo);
+      }
+
+      console.log(mappa);
+
+      const righeTabella = res[0].map(valore => {
+        return {
+          CourierId: valore.CourierId,
+          CourierName: valore.CourierName,
+          ExpeditionFrom: valore.ExpeditionFrom,
+          ExpeditionTo: valore.ExpeditionTo,
+          MaxTimeExpedition: valore.MaxTimeExpedition,
+          Pricing: mappa.get(valore.CourierId.toString())
+        }
+      })
+
+      console.log(righeTabella);
+
+      this.extras = {
+        state: {
+          righe: righeTabella
+        }
+      }
+
+      this.router.navigate(['results'], this.extras);
+    })
+
+  }
+
+  getCourierId(x) {
+    return x.CourierId;
   }
 }

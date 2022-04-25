@@ -12,12 +12,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PackInfoComponent } from './components/pack-info/pack-info.component';
 import { HomeFormsComponent } from './components/home-forms/home-forms.component';
 
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatTabsModule} from '@angular/material/tabs';
+
 @NgModule({
   declarations: [
     HomeComponent,
     HomeInputComponent,
     PackInfoComponent,
-    HomeFormsComponent
+    HomeFormsComponent,
+    
+
   ],
   imports: [
     CommonModule,
@@ -26,7 +32,10 @@ import { HomeFormsComponent } from './components/home-forms/home-forms.component
     MatInputModule,
     MatAutocompleteModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTabsModule
   ],
   providers: [
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill'}}

@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import  data from '../../../../../assets/json/elencoComuni.json';
+import {MatIconModule} from '@angular/material/icon'
 // import data from '../../../../../assets/json/prova.json';
 
 

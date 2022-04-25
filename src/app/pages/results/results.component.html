@@ -1,0 +1,74 @@
+<div class="container my-4 home-container-input">
+
+  <div *ngIf="sortedByPrice.length === 0" class="row">
+    <div class="alert alert-warning text-center align-center col-12" role="alert">
+      Non sono presenti opzioni per i parametri inseriti
+    </div>
+    <div class="col-12 text-center">
+      <button type="button" class="btn btn-outline-warning " (click)="goHome()">Effettua una nuova ricerca</button>
+    </div>
+  </div>
+  <div *ngIf="sortedByPrice.length">
+  <mat-tab-group mat-align-tabs="center">
+    <mat-tab label="PREZZO SPEDIZIONE">
+      <div *ngFor="let risultato of sortedByPrice" class="result results-container row">
+        
+        <div class="col-4 result-elem">
+          <div>
+            <p>TEMPO MASSIMO SPEDIZIONE</p>
+          </div>
+          <div>
+            <h2>{{ risultato.MaxTimeExpedition }}</h2>
+          </div>
+        </div>
+        <div class="col-4 result-elem">
+          <img
+            src="{{ selezioneLogo(risultato.CourierName) }}"
+            class="courier-logo"
+          />
+          <div>
+            <p>{{ risultato.CourierName }}</p>
+          </div>
+        </div>
+  
+        <div class="col-4 result-elem">
+          <p>Prezzo:</p>
+          <h2>{{ risultato.Pricing }} €</h2>
+        </div>
+      </div>
+
+
+    </mat-tab>
+    <mat-tab label="TEMPO MASSIMO SPEDIZIONE">
+
+      <div *ngFor="let risultato of sortedByExpedition" class="result results-container row">
+        <div class="col-4 result-elem">
+          <div>
+            <p>TEMPO MASSIMO SPEDIZIONE</p>
+          </div>
+          <div>
+            <h2>{{ risultato.MaxTimeExpedition }}</h2>
+          </div>
+        </div>
+        <div class="col-4 result-elem">
+          <img
+            src="{{ selezioneLogo(risultato.CourierName) }}"
+            class="courier-logo"
+          />
+          <div>
+            <p>{{ risultato.CourierName }}</p>
+          </div>
+        </div>
+  
+        <div class="col-4 result-elem">
+          <p>Prezzo:</p>
+          <h2>{{ risultato.Pricing }}€</h2>
+        </div>
+      </div>
+
+
+    </mat-tab>
+   
+  </mat-tab-group>
+  </div>
+</div>
